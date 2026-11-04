@@ -1,0 +1,17 @@
+services:
+  rag-service:
+    build: .
+    image: rag-service:0.1
+    ports:
+      - "8000:8000"
+    environment:
+      OLLAMA_HOST: http://host.docker.internal:11434
+      IDK_THRESHOLD: ${IDK_THRESHOLD:-0.50}
+      ANONYMIZED_TELEMETRY: "False"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - chroma_data:/app/chroma_rag
+
+volumes:
+  chroma_data:
